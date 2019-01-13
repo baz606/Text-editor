@@ -10,7 +10,6 @@ int CALLBACK WinMain(
 	Win32App textEditor(640, 480, "Text Editor");
 
 	MSG msg;
-
 	while (GetMessage(&msg, NULL, 0, 0))
 	{
 		TranslateMessage(&msg);

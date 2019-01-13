@@ -8,7 +8,7 @@ public:
 	Win32App(int width, int height, LPCSTR title);
 	HWND GetHandle();
 private:
-	LRESULT CreateWindowApp(int x, int y, int width, int height, LPCSTR title);
+	LRESULT CreateWindowApp(int width, int height, LPCSTR title);
 	LRESULT CreateWindowClassStruct(LPCSTR className);
 	ATOM RegisterClassWindowApp();
 

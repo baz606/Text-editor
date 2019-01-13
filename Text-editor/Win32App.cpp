@@ -2,10 +2,10 @@
 
 Win32App::Win32App(int width, int height, LPCSTR title)
 {
-	CreateWindowApp(CW_USEDEFAULT, CW_USEDEFAULT, width, height, title);
+	CreateWindowApp(width, height, title);
 }
 
-LRESULT Win32App::CreateWindowApp(int x, int y, int width, int height, LPCSTR title)
+LRESULT Win32App::CreateWindowApp(int width, int height, LPCSTR title)
 {
 	CreateWindowClassStruct(title);
 	RegisterClassWindowApp();
@@ -13,7 +13,7 @@ LRESULT Win32App::CreateWindowApp(int x, int y, int width, int height, LPCSTR ti
 	hWnd = CreateWindowEx(
 		0, title, title,
 		WS_CAPTION | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_SYSMENU,
-		x, y, width, height,
+		CW_USEDEFAULT, CW_USEDEFAULT, width, height,
 		NULL, NULL, GetModuleHandle(NULL), NULL
 	);
 

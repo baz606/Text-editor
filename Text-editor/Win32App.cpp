@@ -1,8 +1,14 @@
 #include "Win32App.h"
+#include "resource.h"
 
 Win32App::Win32App(int width, int height, LPCSTR title)
 {
 	CreateWindowApp(width, height, title);
+}
+
+Win32App::~Win32App()
+{
+	delete editControl;
 }
 
 LRESULT Win32App::CreateWindowApp(int width, int height, LPCSTR title)
@@ -14,7 +20,7 @@ LRESULT Win32App::CreateWindowApp(int width, int height, LPCSTR title)
 		0, title, title,
 		WS_CAPTION | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_SYSMENU,
 		CW_USEDEFAULT, CW_USEDEFAULT, width, height,
-		NULL, NULL, GetModuleHandle(NULL), NULL
+		NULL, NULL, GetModuleHandle(NULL), this
 	);
 
 	if (hWnd != nullptr)
@@ -32,7 +38,7 @@ LRESULT Win32App::CreateWindowClassStruct(LPCSTR className)
 
 	wcEx.cbSize = sizeof(wcEx);
 	wcEx.style = CS_OWNDC;
-	wcEx.lpfnWndProc = WndProc;
+	wcEx.lpfnWndProc = WndProcInitial;
 	wcEx.cbClsExtra = 0;
 	wcEx.cbWndExtra = 0;
 	wcEx.hInstance = GetModuleHandle(nullptr);
@@ -56,6 +62,29 @@ HWND Win32App::GetHandle()
 	return hWnd;
 }
 
+LRESULT CALLBACK Win32App::WndProcInitial(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+{
+	if (uMsg == WM_NCCREATE)
+	{
+		const CREATESTRUCTW *pCreate = (CREATESTRUCTW*)lParam;
+		Win32App *pWin = (Win32App*)(pCreate->lpCreateParams);
+		SetWindowLong(hWnd, GWL_USERDATA, (LONG)pWin);
+		
+		SetWindowLong(hWnd, GWL_WNDPROC, (LONG)WndProcInterm);
+
+		return pWin->WndProc(hWnd, uMsg, wParam, lParam);
+	}
+
+	return DefWindowProc(hWnd, uMsg, wParam, lParam);
+}
+
+LRESULT CALLBACK Win32App::WndProcInterm(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+{
+	Win32App *pWin = (Win32App*)GetWindowLong(hWnd, GWL_USERDATA);
+
+	return pWin->WndProc(hWnd, uMsg, wParam, lParam);
+}
+
 LRESULT CALLBACK Win32App::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	switch (uMsg)
@@ -63,6 +92,13 @@ LRESULT CALLBACK Win32App::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM l
 		case WM_CLOSE:
 		{
 			PostQuitMessage(0);
+		}
+		break;
+		case WM_CREATE:
+		{
+			editControl = new EditControl(IDC_MAIN_EDIT, 640, 480,
+				WS_CHILD | WS_VISIBLE | WS_VSCROLL | WS_HSCROLL | ES_MULTILINE | ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_WANTRETURN,
+				hWnd);
 		}
 		break;
 		default:

@@ -116,10 +116,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="EditControl.h" />
     <ClInclude Include="NewWin.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Win32App.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="EditControl.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Win32App.cpp" />
   </ItemGroup>

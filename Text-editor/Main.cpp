@@ -7,7 +7,7 @@ int CALLBACK WinMain(
 	int		  nCmdShow
 )
 {
-	Win32App textEditor(640, 480, "Text Editor");
+	Win32App textEditor(640, 480, "Text Editor", hInstance);
 
 	MSG msg;
 	while (GetMessage(&msg, NULL, 0, 0))

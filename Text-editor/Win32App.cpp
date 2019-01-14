@@ -1,13 +1,16 @@
 #include "Win32App.h"
 #include "resource.h"
 
-Win32App::Win32App(int width, int height, LPCSTR title)
+Win32App::Win32App(int width, int height, LPCSTR title, HINSTANCE hInstance)
 {
+	className = title;
+	this->hInstance = hInstance;
 	CreateWindowApp(width, height, title);
 }
 
 Win32App::~Win32App()
 {
+	UnregisterClass(className, hInstance);
 	delete editControl;
 }
 
@@ -60,6 +63,11 @@ ATOM Win32App::RegisterClassWindowApp()
 HWND Win32App::GetHandle()
 {
 	return hWnd;
+}
+
+HINSTANCE Win32App::GetHInstance()
+{
+	return hInstance;
 }
 
 LRESULT CALLBACK Win32App::WndProcInitial(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)

@@ -10,4 +10,5 @@ public:
 	void ResizeWindow(HWND hParent);
 private:
 	HWND hWnd;
+	HFONT hFont;
 };

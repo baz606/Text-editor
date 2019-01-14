@@ -109,6 +109,12 @@ LRESULT CALLBACK Win32App::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM l
 				hWnd);
 		}
 		break;
+		case WM_SIZE:
+		{
+			editControl->ResizeWindow(hWnd);
+			editControl->SetDefaultFont();
+		}
+		break;
 		default:
 			return DefWindowProc(hWnd, uMsg, wParam, lParam);
 	}

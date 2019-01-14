@@ -20,6 +20,7 @@ private:
 private:
 	HWND hWnd;
 	HINSTANCE hInstance;
+	HMENU hMenu;
 	WNDCLASSEX wcEx;
 	EditControl *editControl;
 	LPCSTR className;

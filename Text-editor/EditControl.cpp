@@ -19,5 +19,19 @@ void EditControl::ResizeWindow(HWND hParent)
 	RECT rcParent;
 	GetClientRect(hParent, &rcParent);
 
-	SetWindowPos(hWnd, NULL, CW_USEDEFAULT, CW_USEDEFAULT, rcParent.right, rcParent.bottom, SWP_NOZORDER);
+	SetWindowPos(hWnd, NULL, 0, 0, rcParent.right, rcParent.bottom, SWP_NOZORDER);
+}
+
+void EditControl::SetDefaultFont()
+{
+	hDefFont = CreateFont(18, 0, 0, 0, FW_MEDIUM, FALSE, FALSE, FALSE,
+		ANSI_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
+		ANTIALIASED_QUALITY, FF_DONTCARE, NULL);
+
+	SendMessage(hWnd, WM_SETFONT, (WPARAM)hDefFont, NULL);
+}
+
+void EditControl::SetFont(HFONT hFont)
+{
+	SendMessage(hWnd, WM_SETFONT, (WPARAM)hFont, NULL);
 }

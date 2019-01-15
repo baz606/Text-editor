@@ -12,6 +12,7 @@ public:
 	void SetFont(HFONT hFont);
 	void SetMargins(int top, int left, int right);
 	void SetTabLimit(int tabLimit);
+	void SetMaxLimitText(UINT limit);
 private:
 	HWND hWnd;
 	HWND parentWindowHandle;

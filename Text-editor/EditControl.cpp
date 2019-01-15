@@ -51,3 +51,8 @@ void EditControl::SetTabLimit(int tabLimit)
 {
 	SendMessage(hWnd, EM_SETTABSTOPS, 1, (LPARAM)&tabLimit);
 }
+
+void EditControl::SetMaxLimitText(UINT limit)
+{
+	SendMessage(hWnd, EM_SETLIMITTEXT, (WPARAM)limit, 0);
+}

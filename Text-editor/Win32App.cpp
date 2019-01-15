@@ -114,6 +114,7 @@ LRESULT CALLBACK Win32App::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM l
 			editControl->SetDefaultFont();
 			editControl->SetMargins(TOP_MARGIN, LEFT_MARGIN, 0);
 			editControl->SetTabLimit(TAB_LIMIT);
+			editControl->SetMaxLimitText(MAX_LIMIT);
 		}
 		break;
 		case WM_ERASEBKGND:

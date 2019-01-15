@@ -1,5 +1,4 @@
 #include "Win32App.h"
-#include "resource.h"
 
 Win32App::Win32App(int width, int height, LPCSTR title, HINSTANCE hInstance)
 {
@@ -111,8 +110,9 @@ LRESULT CALLBACK Win32App::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM l
 		break;
 		case WM_SIZE:
 		{
-			editControl->ResizeWindow(hWnd);
+			editControl->ResizeWindow();
 			editControl->SetDefaultFont();
+			editControl->SetMargins(TOP_MARGIN, LEFT_MARGIN, 0);
 		}
 		break;
 		default:

@@ -5,6 +5,6 @@
 
 #define WIN_ENDL "\r\n"	//Windows end line
 #define MAXLIMIT 0x7FFFFFFE //2147483646 character limit
-#define LEFT_MARGIN 20
-#define TOP_MARGIN 20
+#define LEFT_MARGIN 7
+#define TOP_MARGIN 6
 #define L_TEXT_FILE_EXTENSION L"*.txt" 

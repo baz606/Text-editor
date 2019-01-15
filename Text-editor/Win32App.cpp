@@ -115,6 +115,16 @@ LRESULT CALLBACK Win32App::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM l
 			editControl->SetMargins(TOP_MARGIN, LEFT_MARGIN, 0);
 		}
 		break;
+		case WM_ERASEBKGND:
+		{
+			HBRUSH hBrush = CreateSolidBrush(RGB(255, 255, 255));
+
+			RECT rect;
+			GetClientRect(hWnd, &rect);
+
+			FillRect((HDC)wParam, &rect, hBrush);
+		}
+		break;
 		default:
 			return DefWindowProc(hWnd, uMsg, wParam, lParam);
 	}

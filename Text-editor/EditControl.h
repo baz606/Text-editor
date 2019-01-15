@@ -11,6 +11,7 @@ public:
 	void SetDefaultFont();
 	void SetFont(HFONT hFont);
 	void SetMargins(int top, int left, int right);
+	void SetTabLimit(int tabLimit);
 private:
 	HWND hWnd;
 	HWND parentWindowHandle;

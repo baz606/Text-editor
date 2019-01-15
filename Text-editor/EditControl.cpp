@@ -46,3 +46,8 @@ void EditControl::SetMargins(int top, int left, int right)
 	GetClientRect(parentWindowHandle, &rcParent);
 	SetWindowPos(hWnd, NULL, 0, top, rcParent.right, rcParent.bottom - top, SWP_NOZORDER);
 }
+
+void EditControl::SetTabLimit(int tabLimit)
+{
+	SendMessage(hWnd, EM_SETTABSTOPS, 1, (LPARAM)&tabLimit);
+}

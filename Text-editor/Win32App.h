@@ -2,6 +2,7 @@
 
 #include "EditControl.h"
 #include "Menu.h"
+#include "DialogBoxWindow.h"
 
 class Win32App
 {
@@ -25,4 +26,5 @@ private:
 	WNDCLASSEX wcEx;
 	EditControl *editControl;
 	LPCSTR className;
+	DialogBoxWindow *dialogBox;
 };

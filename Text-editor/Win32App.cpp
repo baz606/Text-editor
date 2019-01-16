@@ -10,7 +10,9 @@ Win32App::Win32App(int width, int height, LPCSTR title, HINSTANCE hInstance)
 Win32App::~Win32App()
 {
 	UnregisterClass(className, hInstance);
+	
 	delete editControl;
+	delete dialogBox;
 }
 
 LRESULT Win32App::CreateWindowApp(int width, int height, LPCSTR title)
@@ -134,6 +136,20 @@ LRESULT CALLBACK Win32App::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM l
 			editControl->SetMargins(TOP_MARGIN, LEFT_MARGIN, 0);
 			editControl->SetTabLimit(TAB_LIMIT);
 			editControl->SetMaxLimitText(MAX_LIMIT);
+		}
+		break;
+		case WM_COMMAND:
+		{
+			int low_word = LOWORD(wParam);
+			int high_word = HIWORD(wParam);
+			switch (low_word)
+			{
+				case ID_HELP_ABOUT:
+				{
+					dialogBox = new DialogBoxWindow();
+					dialogBox->CreateDialogBox(hInstance, "About", IDD_DIALOG1, hWnd);
+				}
+			}
 		}
 		break;
 		case WM_ERASEBKGND:

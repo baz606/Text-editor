@@ -1,15 +1,15 @@
 #pragma once
 
 #include "NewWin.h"
-#include <vector>
 
 class Menu
 {
 public:
 	Menu();
-	~Menu();
-	void AddMenuItemsFor(LPCSTR rootItem, LPCSTR *subMenuItems);
-	void AddMenuItemsFor(LPCSTR rootItem, std::vector<LPCSTR> &subMenuItems);
+	void AddSubMenuItem(LPCSTR subMenu, INT identifier);
+	void AddRootMenuItem(LPCSTR rootMenu);
+	void SetMenuFor(HWND parentHandle);
+	void Reset();
 
 private:
 	HMENU hMenu;

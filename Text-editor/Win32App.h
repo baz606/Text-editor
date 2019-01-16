@@ -1,6 +1,7 @@
 #pragma once
 
 #include "EditControl.h"
+#include "Menu.h"
 
 class Win32App
 {
@@ -14,13 +15,13 @@ private:
 	LRESULT CreateWindowClassStruct(LPCSTR className);
 	ATOM RegisterClassWindowApp();
 	LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+	void AddMenuSystem(HWND hWnd);
 
 	static LRESULT CALLBACK WndProcInitial(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK WndProcInterm(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 private:
 	HWND hWnd;
 	HINSTANCE hInstance;
-	HMENU hMenu;
 	WNDCLASSEX wcEx;
 	EditControl *editControl;
 	LPCSTR className;

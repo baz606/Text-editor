@@ -92,6 +92,23 @@ LRESULT CALLBACK Win32App::WndProcInterm(HWND hWnd, UINT uMsg, WPARAM wParam, LP
 	return pWin->WndProc(hWnd, uMsg, wParam, lParam);
 }
 
+void Win32App::AddMenuSystem(HWND hWnd)
+{
+	Menu menu;
+
+	menu.AddSubMenuItem("Open", ID_FILE_OPEN);
+	menu.AddSubMenuItem("SaveAs", ID_FILE_SAVEAS);
+	menu.AddSubMenuItem("Exit", ID_FILE_EXIT);
+	menu.AddRootMenuItem("File");
+	menu.SetMenuFor(hWnd);
+	menu.Reset();
+
+	menu.AddSubMenuItem("About", ID_HELP_ABOUT);
+	menu.AddRootMenuItem("Help");
+	menu.SetMenuFor(hWnd);
+	menu.Reset();
+}
+
 LRESULT CALLBACK Win32App::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	switch (uMsg)
@@ -106,6 +123,8 @@ LRESULT CALLBACK Win32App::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM l
 			editControl = new EditControl(IDC_MAIN_EDIT, 640, 480,
 				WS_CHILD | WS_VISIBLE | WS_VSCROLL | WS_HSCROLL | ES_MULTILINE | ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_WANTRETURN,
 				hWnd);
+
+			AddMenuSystem(hWnd);
 		}
 		break;
 		case WM_SIZE:

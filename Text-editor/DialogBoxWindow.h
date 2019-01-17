@@ -5,7 +5,7 @@
 class DialogBoxWindow
 {
 public:
-	INT CreateDialogBox(HINSTANCE handle,LPCSTR title, INT identifier, HWND parentHandle);
+	INT CreateDialogBox(HINSTANCE handleInstance, LPCSTR title, INT identifier, HWND parentHandle);
 	static LPCSTR dialogBoxtitle;
 
 private:

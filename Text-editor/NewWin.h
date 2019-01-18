@@ -47,4 +47,5 @@
 #define STRICT
 
 #include <Windows.h>
+#include <shobjidl_core.h>
 #include "resource.h"

@@ -8,6 +8,7 @@
 #define LEFT_MARGIN                     7
 #define TAB_LIMIT                       8
 #define MAX_LIMIT						0x7FFFFFFE //2147483646 character limit
+#define L_TEXT_FILE_EXTENSION			L"*.txt" //LPCWSTR type
 
 #define IDD_DIALOG1                     101
 #define IDC_MAIN_EDIT                   102

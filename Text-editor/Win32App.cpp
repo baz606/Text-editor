@@ -149,6 +149,17 @@ LRESULT CALLBACK Win32App::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM l
 					dialogBox = new DialogBoxWindow();
 					dialogBox->CreateDialogBox(hInstance, "About", IDD_DIALOG1, hWnd);
 				}
+				break;
+				case ID_FILE_EXIT:
+				{
+					PostQuitMessage(0);
+				}
+				break;
+				case ID_FILE_OPEN:
+				{
+
+				}
+				break;
 			}
 		}
 		break;

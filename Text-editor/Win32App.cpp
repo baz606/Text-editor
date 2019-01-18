@@ -98,8 +98,8 @@ void Win32App::AddMenuSystem(HWND hWnd)
 {
 	Menu menu;
 
-	menu.AddSubMenuItem("Open", ID_FILE_OPEN);
-	menu.AddSubMenuItem("SaveAs", ID_FILE_SAVEAS);
+	menu.AddSubMenuItem("Open...", ID_FILE_OPEN);
+	menu.AddSubMenuItem("SaveAs...", ID_FILE_SAVEAS);
 	menu.AddSubMenuItem("Exit", ID_FILE_EXIT);
 	menu.AddRootMenuItem("File");
 	menu.SetMenuFor(hWnd);
@@ -157,7 +157,8 @@ LRESULT CALLBACK Win32App::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM l
 				break;
 				case ID_FILE_OPEN:
 				{
-
+					IFileDialogBox iFileDialogBox;
+					iFileDialogBox.CreateDialogBox(CLSID_FileOpenDialog, CLSCTX_INPROC_SERVER, IID_IFileDialog, FOS_FORCEFILESYSTEM);
 				}
 				break;
 			}

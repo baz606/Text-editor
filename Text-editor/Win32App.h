@@ -3,6 +3,7 @@
 #include "EditControl.h"
 #include "Menu.h"
 #include "DialogBoxWindow.h"
+#include "IFileDialogBox.h"
 
 class Win32App
 {

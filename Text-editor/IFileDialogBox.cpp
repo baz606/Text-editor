@@ -7,7 +7,7 @@ IFileDialogBox::IFileDialogBox()
 
 IFileDialogBox::~IFileDialogBox()
 {
-	iFileDialog->Release();
+	//iFileDialog->Release();
 }
 
 HRESULT IFileDialogBox::CreateDialogBox(REFCLSID rCLSID, DWORD dwClsContext, REFIID refID, DWORD dFlags)
@@ -24,6 +24,7 @@ HRESULT IFileDialogBox::CreateDialogBox(REFCLSID rCLSID, DWORD dwClsContext, REF
 			iFileDialog->SetFileTypes(ARRAYSIZE(c_rgSaveTypes), c_rgSaveTypes);
 			iFileDialog->Show(NULL);
 		}
+		iFileDialog->Release();
 	}
 
 	return hResult;

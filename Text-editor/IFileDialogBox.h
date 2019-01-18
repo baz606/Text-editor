@@ -1,6 +1,7 @@
 #pragma once
 
 #include "NewWin.h"
+#include <stringapiset.h>
 
 const COMDLG_FILTERSPEC c_rgSaveTypes[] =
 {
@@ -19,6 +20,7 @@ public:
 	IFileDialogBox();
 	~IFileDialogBox();
 	HRESULT CreateDialogBox(REFCLSID rCLSID, DWORD dwClsContext, REFIID refID, DWORD dFlags);
+	LPSTR GetSelectedFilePath();
 
 private:
 	HRESULT SetOptions(DWORD dFlags);

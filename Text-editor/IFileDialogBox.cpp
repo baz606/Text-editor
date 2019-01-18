@@ -7,7 +7,10 @@ IFileDialogBox::IFileDialogBox()
 
 IFileDialogBox::~IFileDialogBox()
 {
-	//iFileDialog->Release();
+	if (iFileDialog != nullptr)
+	{
+		iFileDialog->Release();
+	}
 }
 
 HRESULT IFileDialogBox::CreateDialogBox(REFCLSID rCLSID, DWORD dwClsContext, REFIID refID, DWORD dFlags)
@@ -24,10 +27,33 @@ HRESULT IFileDialogBox::CreateDialogBox(REFCLSID rCLSID, DWORD dwClsContext, REF
 			iFileDialog->SetFileTypes(ARRAYSIZE(c_rgSaveTypes), c_rgSaveTypes);
 			iFileDialog->Show(NULL);
 		}
-		iFileDialog->Release();
 	}
 
 	return hResult;
+}
+
+LPSTR IFileDialogBox::GetSelectedFilePath()
+{
+	HRESULT hResult;
+	if (iFileDialog != nullptr)
+	{
+		IShellItem *selectedFile;
+		hResult = iFileDialog->GetResult(&selectedFile);
+		if (SUCCEEDED(hResult))
+		{
+			LPWSTR filePath = nullptr;
+			selectedFile->GetDisplayName(SIGDN_FILESYSPATH, &filePath);
+
+			//Convert LPWSTR to LPSTR
+			LPSTR convertedFilePath = new char[MAX_PATH];
+			WideCharToMultiByte(CP_ACP, 0, filePath, MAX_PATH, convertedFilePath, MAX_PATH, NULL, NULL);
+
+			//OutputDebugString(buffer);
+			selectedFile->Release();
+
+			return convertedFilePath;
+		}
+	}
 }
 
 HRESULT IFileDialogBox::SetOptions(DWORD dFlags)

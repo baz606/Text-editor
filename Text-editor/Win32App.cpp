@@ -12,7 +12,6 @@ Win32App::~Win32App()
 	UnregisterClass(className, hInstance);
 	
 	delete editControl;
-	delete dialogBox;
 }
 
 LRESULT Win32App::CreateWindowApp(int width, int height, LPCSTR title)
@@ -146,8 +145,8 @@ LRESULT CALLBACK Win32App::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM l
 			{
 				case ID_HELP_ABOUT:
 				{
-					dialogBox = new DialogBoxWindow();
-					dialogBox->CreateDialogBox(hInstance, "About", IDD_DIALOG1, hWnd);
+					DialogBoxWindow dialogBox;
+					dialogBox.CreateDialogBox(hInstance, "About", IDD_DIALOG1, hWnd);
 				}
 				break;
 				case ID_FILE_EXIT:
@@ -158,7 +157,10 @@ LRESULT CALLBACK Win32App::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM l
 				case ID_FILE_OPEN:
 				{
 					IFileDialogBox iFileDialogBox;
-					iFileDialogBox.CreateDialogBox(CLSID_FileOpenDialog, CLSCTX_INPROC_SERVER, IID_IFileDialog, FOS_FORCEFILESYSTEM);
+					iFileDialogBox.CreateDialogBox(CLSID_FileOpenDialog, CLSCTX_INPROC_SERVER,
+						IID_IFileDialog, FOS_FORCEFILESYSTEM);
+					LPSTR filePath = iFileDialogBox.GetSelectedFilePath();
+					editControl->DisplayTextFromFile(filePath);
 				}
 				break;
 			}

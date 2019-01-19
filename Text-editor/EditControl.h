@@ -1,6 +1,9 @@
 #pragma once
 
 #include "NewWin.h"
+#include <fstream>
+#include <sstream>
+#include <string>
 
 class EditControl
 {
@@ -13,6 +16,7 @@ public:
 	void SetMargins(int top, int left, int right);
 	void SetTabLimit(int tabLimit);
 	void SetMaxLimitText(UINT limit);
+	BOOL DisplayTextFromFile(LPSTR filePath);
 private:
 	HWND hWnd;
 	HWND parentWindowHandle;

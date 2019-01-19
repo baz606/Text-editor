@@ -27,5 +27,4 @@ private:
 	WNDCLASSEX wcEx;
 	EditControl *editControl;
 	LPCSTR className;
-	DialogBoxWindow *dialogBox;
 };

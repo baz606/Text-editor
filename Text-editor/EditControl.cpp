@@ -56,3 +56,27 @@ void EditControl::SetMaxLimitText(UINT limit)
 {
 	SendMessage(hWnd, EM_SETLIMITTEXT, (WPARAM)limit, 0);
 }
+
+BOOL EditControl::DisplayTextFromFile(LPSTR filePath)
+{
+	std::ifstream inputFileStream(filePath);
+	std::stringstream ss;
+	std::string temp, fileContents;
+
+	if (inputFileStream.is_open())
+	{
+		while (getline(inputFileStream, temp))
+		{
+			ss << temp << WIN_ENDL;
+		}
+
+		fileContents = ss.str();
+		SetWindowText(hWnd, fileContents.c_str());
+		inputFileStream.close();
+		return TRUE;
+	}
+	else
+	{
+		return FALSE;
+	}
+}

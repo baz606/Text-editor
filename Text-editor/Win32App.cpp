@@ -98,7 +98,7 @@ void Win32App::AddMenuSystem(HWND hWnd)
 	Menu menu;
 
 	menu.AddSubMenuItem("Open...", ID_FILE_OPEN);
-	menu.AddSubMenuItem("SaveAs...", ID_FILE_SAVEAS);
+	menu.AddSubMenuItem("Save As...", ID_FILE_SAVEAS);
 	menu.AddSubMenuItem("Exit", ID_FILE_EXIT);
 	menu.AddRootMenuItem("File");
 	menu.SetMenuFor(hWnd);
@@ -156,11 +156,24 @@ LRESULT CALLBACK Win32App::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM l
 				break;
 				case ID_FILE_OPEN:
 				{
-					IFileDialogBox iFileDialogBox;
-					iFileDialogBox.CreateDialogBox(CLSID_FileOpenDialog, CLSCTX_INPROC_SERVER,
+					IFileDialogBox openDialog;
+					openDialog.CreateDialogBox(CLSID_FileOpenDialog, CLSCTX_INPROC_SERVER,
 						IID_IFileDialog, FOS_FORCEFILESYSTEM);
-					LPSTR filePath = iFileDialogBox.GetSelectedFilePath();
+					LPSTR filePath = openDialog.GetSelectedFilePath();
 					editControl->DisplayTextFromFile(filePath);
+
+					delete filePath;
+				}
+				break;
+				case ID_FILE_SAVEAS:
+				{
+					IFileDialogBox saveAsDialog;
+					saveAsDialog.CreateDialogBox(CLSID_FileSaveDialog, CLSCTX_INPROC_SERVER,
+						IID_IFileDialog, FOS_FORCEFILESYSTEM);
+					LPSTR filePath = saveAsDialog.GetSelectedFilePath();
+					editControl->SaveTextToFile(filePath);
+
+					delete filePath;
 				}
 				break;
 			}

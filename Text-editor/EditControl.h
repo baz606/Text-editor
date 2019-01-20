@@ -17,6 +17,7 @@ public:
 	void SetTabLimit(int tabLimit);
 	void SetMaxLimitText(UINT limit);
 	BOOL DisplayTextFromFile(LPSTR filePath);
+	BOOL SaveTextToFile(LPSTR filePath);
 private:
 	HWND hWnd;
 	HWND parentWindowHandle;

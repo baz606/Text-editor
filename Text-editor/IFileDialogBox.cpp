@@ -3,6 +3,7 @@
 IFileDialogBox::IFileDialogBox()
 {
 	iFileDialog = nullptr;
+	eventHandler = new CDialogEventHandler(this);
 }
 
 IFileDialogBox::~IFileDialogBox()
@@ -23,7 +24,9 @@ HRESULT IFileDialogBox::CreateDialogBox(REFCLSID rCLSID, DWORD dwClsContext, REF
 		SetDialogBoxType(rCLSID);
 		if (SUCCEEDED(SetOptions(dFlags)))
 		{
+			DWORD dWord;
 			iFileDialog->SetDefaultExtension(L"");
+			iFileDialog->Advise(eventHandler, &dWord);
 			iFileDialog->SetFileTypes(ARRAYSIZE(c_rgSaveTypes), c_rgSaveTypes);
 			iFileDialog->Show(NULL);
 		}
@@ -54,6 +57,8 @@ LPSTR IFileDialogBox::GetSelectedFilePath()
 			return convertedFilePath;
 		}
 	}
+
+	return NULL;
 }
 
 HRESULT IFileDialogBox::SetOptions(DWORD dFlags)

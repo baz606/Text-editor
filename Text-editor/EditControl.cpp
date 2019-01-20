@@ -59,24 +59,50 @@ void EditControl::SetMaxLimitText(UINT limit)
 
 BOOL EditControl::DisplayTextFromFile(LPSTR filePath)
 {
-	std::ifstream inputFileStream(filePath);
-	std::stringstream ss;
-	std::string temp, fileContents;
-
-	if (inputFileStream.is_open())
+	if (filePath != nullptr)
 	{
-		while (getline(inputFileStream, temp))
+		std::ifstream inputFileStream(filePath);
+		std::stringstream ss;
+		std::string temp, fileContents;
+
+		if (inputFileStream.is_open())
 		{
-			ss << temp << WIN_ENDL;
-		}
+			while (getline(inputFileStream, temp))
+			{
+				ss << temp << WIN_ENDL;
+			}
 
-		fileContents = ss.str();
-		SetWindowText(hWnd, fileContents.c_str());
-		inputFileStream.close();
-		return TRUE;
+			fileContents = ss.str();
+			SetWindowText(hWnd, fileContents.c_str());
+			inputFileStream.close();
+			return TRUE;
+		}
+		else
+		{
+			return FALSE;
+		}
 	}
-	else
+	return FALSE;
+}
+
+BOOL EditControl::SaveTextToFile(LPSTR filePath)
+{
+	if (filePath != nullptr)
 	{
-		return FALSE;
+		std::ofstream outputFileStream(filePath);
+		if (outputFileStream.is_open())
+		{
+			LPSTR content;
+			int length = GetWindowTextLength(hWnd);
+			content = new CHAR[length + 1];
+			GetWindowText(hWnd, content, length + 1);
+
+			outputFileStream << content;
+			outputFileStream.close();
+
+			delete[] content;
+			return TRUE;
+		}
 	}
+	return FALSE;
 }

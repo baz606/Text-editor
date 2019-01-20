@@ -9,6 +9,8 @@ EditControl::EditControl(INT identified, INT width, INT height, DWORD dwStyle, H
 	);
 
 	parentWindowHandle = hParent;
+	//SetWindowLongPtr(hWnd, GWL_WNDPROC, (LONG_PTR)EditWndProc);
+	SetWindowSubclass(hWnd, EditWndProc, IDC_MAIN_EDIT, NULL);
 }
 
 HWND EditControl::GetHandle()
@@ -105,4 +107,10 @@ BOOL EditControl::SaveTextToFile(LPSTR filePath)
 		}
 	}
 	return FALSE;
+}
+
+LRESULT CALLBACK EditControl::EditWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, 
+	LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData)
+{
+	return DefSubclassProc(hWnd, uMsg, wParam, lParam);
 }

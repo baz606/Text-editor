@@ -22,4 +22,6 @@ private:
 	HWND hWnd;
 	HWND parentWindowHandle;
 	HFONT hDefFont;
+	static LRESULT CALLBACK EditWndProc(HWND hWnd, UINT uMsg, WPARAM wParam,
+		LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData);
 };

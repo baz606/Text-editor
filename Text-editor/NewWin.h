@@ -2,7 +2,7 @@
 	The contents of the file are originally taken from https://github.com/planetchili/hw3d/tree/master/hw3d
 */
 #pragma once
-
+#pragma comment(lib, "comctl32.lib")
 // target Windows 7 or later
 #define _WIN32_WINNT 0x0601
 #include <sdkddkver.h>
@@ -48,4 +48,5 @@
 
 #include <Windows.h>
 #include <shobjidl.h>
+#include <CommCtrl.h>
 #include "resource.h"

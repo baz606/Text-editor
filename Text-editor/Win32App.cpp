@@ -124,8 +124,8 @@ LRESULT CALLBACK Win32App::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM l
 			editControl = new EditControl(IDC_MAIN_EDIT, 640, 480,
 				WS_CHILD | WS_VISIBLE | WS_VSCROLL | WS_HSCROLL | ES_MULTILINE | ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_WANTRETURN,
 				hWnd);
-
 			AddMenuSystem(hWnd);
+			//SendMessage(editControl->GetHandle(), EM_SETBKGNDCOLOR, 0, (LPARAM)RGB(100, 100, 100));
 		}
 		break;
 		case WM_SIZE:
@@ -187,10 +187,15 @@ LRESULT CALLBACK Win32App::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM l
 			GetClientRect(hWnd, &rect);
 
 			FillRect((HDC)wParam, &rect, hBrush);
+			DeleteObject(hBrush);
 		}
 		break;
-		default:
-			return DefWindowProc(hWnd, uMsg, wParam, lParam);
+		//case WM_CTLCOLOREDIT:
+		//{
+		//	HDC hdc = (HDC)wParam;
+		//	SetTextColor(hdc, RGB(0, 0, 255));
+		//	return (LRESULT)GetStockObject(BLACK_BRUSH);
+		//}
 	}
 
 	return DefWindowProc(hWnd, uMsg, wParam, lParam);

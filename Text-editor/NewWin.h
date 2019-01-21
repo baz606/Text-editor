@@ -50,3 +50,4 @@
 #include <shobjidl.h>
 #include <CommCtrl.h>
 #include "resource.h"
+#include <Richedit.h>

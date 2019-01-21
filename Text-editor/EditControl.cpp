@@ -2,15 +2,16 @@
 
 EditControl::EditControl(INT identified, INT width, INT height, DWORD dwStyle, HWND hParent)
 {
+	LoadLibrary(TEXT("Msftedit.dll"));
+
 	hWnd = CreateWindowEx(
-		NULL, "Edit", "", dwStyle,
+		NULL, "RICHEDIT50W", "", dwStyle,
 		0, 0, width, height, hParent,(HMENU)identified,
 		GetModuleHandle(NULL), NULL
 	);
 
 	parentWindowHandle = hParent;
-	//SetWindowLongPtr(hWnd, GWL_WNDPROC, (LONG_PTR)EditWndProc);
-	SetWindowSubclass(hWnd, EditWndProc, IDC_MAIN_EDIT, NULL);
+	//SetWindowSubclass(hWnd, EditWndProc, IDC_MAIN_EDIT, NULL);
 }
 
 HWND EditControl::GetHandle()
@@ -71,7 +72,7 @@ BOOL EditControl::DisplayTextFromFile(LPSTR filePath)
 		{
 			while (getline(inputFileStream, temp))
 			{
-				ss << temp << WIN_ENDL;
+				ss << temp;
 			}
 
 			fileContents = ss.str();
@@ -112,5 +113,9 @@ BOOL EditControl::SaveTextToFile(LPSTR filePath)
 LRESULT CALLBACK EditControl::EditWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, 
 	LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData)
 {
+	switch (uMsg)
+	{
+
+	}
 	return DefSubclassProc(hWnd, uMsg, wParam, lParam);
 }

@@ -4,7 +4,7 @@
 //
 
 #define DEBUG                           1
-#define TOP_MARGIN                      6
+#define TOP_MARGIN                      5
 #define LEFT_MARGIN                     7
 #define TAB_LIMIT                       8
 #define MAX_LIMIT						0x7FFFFFFE //2147483646 character limit

@@ -131,10 +131,7 @@ LRESULT CALLBACK Win32App::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM l
 		case WM_SIZE:
 		{
 			editControl->ResizeWindow();
-			editControl->SetDefaultFont();
 			editControl->SetMargins(TOP_MARGIN, LEFT_MARGIN, 0);
-			editControl->SetTabLimit(TAB_LIMIT);
-			editControl->SetMaxLimitText(MAX_LIMIT);
 		}
 		break;
 		case WM_COMMAND:
@@ -181,21 +178,17 @@ LRESULT CALLBACK Win32App::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM l
 		break;
 		case WM_ERASEBKGND:
 		{
-			HBRUSH hBrush = CreateSolidBrush(RGB(255, 255, 255));
+			HBRUSH hBrush = CreateSolidBrush(editControl->GetBackgroundColor());
 
 			RECT rect;
 			GetClientRect(hWnd, &rect);
 
 			FillRect((HDC)wParam, &rect, hBrush);
 			DeleteObject(hBrush);
+
+			return 0;
 		}
 		break;
-		//case WM_CTLCOLOREDIT:
-		//{
-		//	HDC hdc = (HDC)wParam;
-		//	SetTextColor(hdc, RGB(0, 0, 255));
-		//	return (LRESULT)GetStockObject(BLACK_BRUSH);
-		//}
 	}
 
 	return DefWindowProc(hWnd, uMsg, wParam, lParam);

@@ -4,14 +4,21 @@ EditControl::EditControl(INT identified, INT width, INT height, DWORD dwStyle, H
 {
 	LoadLibrary(TEXT("Msftedit.dll"));
 
+	backgroundColor = RGB(0, 0, 0);
+	parentWindowHandle = hParent;
+
 	hWnd = CreateWindowEx(
 		NULL, "RICHEDIT50W", "", dwStyle,
 		0, 0, width, height, hParent,(HMENU)identified,
 		GetModuleHandle(NULL), NULL
 	);
 
-	parentWindowHandle = hParent;
-	//SetWindowSubclass(hWnd, EditWndProc, IDC_MAIN_EDIT, NULL);
+	SetDefaultCharFormat();
+	SetTabLimit(TAB_LIMIT);
+	SetMaxLimitText(MAX_LIMIT);
+	SetBackgroundColor(backgroundColor);
+
+	SetWindowSubclass(hWnd, EditWndProc, IDC_MAIN_EDIT, NULL);
 }
 
 HWND EditControl::GetHandle()
@@ -27,18 +34,20 @@ void EditControl::ResizeWindow()
 	SetWindowPos(hWnd, NULL, 0, 0, rcParent.right, rcParent.bottom, SWP_NOZORDER);
 }
 
-void EditControl::SetDefaultFont()
+void EditControl::SetDefaultCharFormat()
 {
-	hDefFont = CreateFont(18, 0, 0, 0, FW_MEDIUM, FALSE, FALSE, FALSE,
-		ANSI_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
-		ANTIALIASED_QUALITY, FF_DONTCARE, NULL);
+	charFormat = { 0 };
+	charFormat.cbSize = sizeof(charFormat);
+	charFormat.crTextColor = RGB(255, 255, 255);
+	charFormat.dwMask = CFM_COLOR | CFM_BOLD;
+	charFormat.dwEffects = CFE_BOLD;
 
-	SendMessage(hWnd, WM_SETFONT, (WPARAM)hDefFont, NULL);
+	SendMessage(hWnd, EM_SETCHARFORMAT, (WPARAM)SCF_ALL, (LPARAM)(&charFormat));
 }
 
-void EditControl::SetFont(HFONT hFont)
+void EditControl::SetCharFormat(CHARFORMATA *charFormat)
 {
-	SendMessage(hWnd, WM_SETFONT, (WPARAM)hFont, NULL);
+	SendMessage(hWnd, EM_SETCHARFORMAT, (WPARAM)SCF_ALL, (LPARAM)(&charFormat));
 }
 
 void EditControl::SetMargins(int top, int left, int right)
@@ -60,6 +69,17 @@ void EditControl::SetMaxLimitText(UINT limit)
 	SendMessage(hWnd, EM_SETLIMITTEXT, (WPARAM)limit, 0);
 }
 
+COLORREF EditControl::GetBackgroundColor()
+{
+	return backgroundColor;
+}
+
+void EditControl::SetBackgroundColor(COLORREF newColor)
+{
+	backgroundColor = newColor;
+	SendMessage(hWnd, EM_SETBKGNDCOLOR, 0, (LPARAM)backgroundColor);
+}
+
 BOOL EditControl::DisplayTextFromFile(LPSTR filePath)
 {
 	if (filePath != nullptr)
@@ -72,7 +92,7 @@ BOOL EditControl::DisplayTextFromFile(LPSTR filePath)
 		{
 			while (getline(inputFileStream, temp))
 			{
-				ss << temp;
+				ss << temp << std::endl;
 			}
 
 			fileContents = ss.str();

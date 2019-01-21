@@ -1,10 +1,11 @@
 #include "EditControl.h"
+#include "IFileDialogBox.h"
 
 EditControl::EditControl(INT identified, INT width, INT height, DWORD dwStyle, HWND hParent)
 {
 	LoadLibrary(TEXT("Msftedit.dll"));
 
-	backgroundColor = RGB(0, 0, 0);
+	backgroundColor = RGB(83, 87, 94);
 	parentWindowHandle = hParent;
 
 	hWnd = CreateWindowEx(
@@ -18,7 +19,9 @@ EditControl::EditControl(INT identified, INT width, INT height, DWORD dwStyle, H
 	SetMaxLimitText(MAX_LIMIT);
 	SetBackgroundColor(backgroundColor);
 
-	SetWindowSubclass(hWnd, EditWndProc, IDC_MAIN_EDIT, NULL);
+	SetWindowSubclass(hWnd, EditWndProcInterm, IDC_MAIN_EDIT, DWORD_PTR(this));
+	RegisterHotKey(hWnd, IDC_MAIN_EDIT, MOD_CONTROL, 'S');
+	RegisterHotKey(hWnd, IDC_MAIN_EDIT, MOD_CONTROL, 'O');
 }
 
 HWND EditControl::GetHandle()
@@ -130,12 +133,34 @@ BOOL EditControl::SaveTextToFile(LPSTR filePath)
 	return FALSE;
 }
 
-LRESULT CALLBACK EditControl::EditWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, 
+LRESULT CALLBACK EditControl::EditWndProcInterm(HWND hWnd, UINT uMsg, WPARAM wParam, 
+	LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData)
+{
+	EditControl *edc = (EditControl*)dwRefData;
+	return edc->EditWndProc(hWnd, uMsg, wParam, lParam, uIdSubclass, dwRefData);
+}
+
+LRESULT CALLBACK EditControl::EditWndProc(HWND hWnd, UINT uMsg, WPARAM wParam,
 	LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData)
 {
 	switch (uMsg)
 	{
+		case WM_HOTKEY:
+		{
+			int low_word = LOWORD(lParam);
+			int high_word = HIWORD(lParam);
 
+			if (low_word == MOD_CONTROL && high_word == 'O')
+			{
+				SendMessage(parentWindowHandle, WM_COMMAND, MAKEWPARAM(ID_FILE_OPEN, 0), 0);
+			}
+			else if (low_word == MOD_CONTROL && high_word == 'S')
+			{
+				SendMessage(parentWindowHandle, WM_COMMAND, MAKEWPARAM(ID_FILE_SAVEAS, 0), 0);
+			}
+		}
+		break;
 	}
+
 	return DefSubclassProc(hWnd, uMsg, wParam, lParam);
 }

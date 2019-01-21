@@ -51,7 +51,6 @@ LPSTR IFileDialogBox::GetSelectedFilePath()
 			LPSTR convertedFilePath = new char[MAX_PATH];
 			WideCharToMultiByte(CP_ACP, 0, filePath, MAX_PATH, convertedFilePath, MAX_PATH, NULL, NULL);
 
-			//OutputDebugString(buffer);
 			selectedFile->Release();
 
 			return convertedFilePath;

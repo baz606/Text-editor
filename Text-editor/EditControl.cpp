@@ -133,6 +133,26 @@ BOOL EditControl::SaveTextToFile(LPSTR filePath)
 	return FALSE;
 }
 
+void EditControl::ChangeParentWindowTitle(LPSTR filePath)
+{
+	if (filePath != nullptr)
+	{
+		std::string filePathStr(filePath);
+		int starting_index;
+		for (int i = filePathStr.length() - 1; i >= 0; i--)
+		{
+			if (filePathStr[i] == '\\')
+			{
+				starting_index = i;
+				break;
+			}
+		}
+		std::string fileName(filePathStr.substr(starting_index + 1));
+
+		SetWindowText(parentWindowHandle, fileName.c_str());
+	}
+}
+
 LRESULT CALLBACK EditControl::EditWndProcInterm(HWND hWnd, UINT uMsg, WPARAM wParam, 
 	LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData)
 {

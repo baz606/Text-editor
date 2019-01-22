@@ -20,6 +20,7 @@ public:
 	BOOL DisplayTextFromFile(LPSTR filePath);
 	BOOL SaveTextToFile(LPSTR filePath);
 	COLORREF GetBackgroundColor();
+	void ChangeParentWindowTitle(LPSTR filePath);
 private:
 	HWND hWnd;
 	HWND parentWindowHandle;
@@ -30,7 +31,6 @@ private:
 private:
 	static LRESULT CALLBACK EditWndProcInterm(HWND hWnd, UINT uMsg, WPARAM wParam,
 		LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData);
-
 	LRESULT CALLBACK EditWndProc(HWND hWnd, UINT uMsg, WPARAM wParam,
 		LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData);
 };

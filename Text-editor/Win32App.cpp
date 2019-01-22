@@ -158,6 +158,7 @@ LRESULT CALLBACK Win32App::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM l
 						IID_IFileDialog, FOS_FORCEFILESYSTEM);
 					LPSTR filePath = openDialog.GetSelectedFilePath();
 					editControl->DisplayTextFromFile(filePath);
+					editControl->ChangeParentWindowTitle(filePath);
 
 					delete filePath;
 				}
@@ -169,6 +170,7 @@ LRESULT CALLBACK Win32App::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM l
 						IID_IFileDialog, FOS_FORCEFILESYSTEM);
 					LPSTR filePath = saveAsDialog.GetSelectedFilePath();
 					editControl->SaveTextToFile(filePath);
+					editControl->ChangeParentWindowTitle(filePath);
 
 					delete filePath;
 				}
